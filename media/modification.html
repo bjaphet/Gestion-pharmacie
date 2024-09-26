@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modification du produit</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+</head>
+<body>
+    <div class="container-fluid px-1 py-5 mx-auto">
+        <div class="row d-flex justify-content-center">
+            <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+                <h3>Modification du produit </h3>
+                <p class="blue-text">Veuillez noter que <br> tous les champs sont obligatoires</p>
+                <div class="card">
+                    <h5 class="text-center mb-4">Pharmacie projet</h5>
+                    <form class="form-card" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                    <li {% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: red;">{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Le nom du produit<span class="text-danger"> *</span></label>
+                                <input type="text" id="name" name="name" value="{{ produit.name }}" placeholder="Entrez le nom du produit" required>
+                            </div>
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Sélectionner la catégorie<span class="text-danger"> *</span></label>
+                                <select name="category" id="category" required>
+                                    {% for categorie in categories %}
+                                        <option value="{{ categorie.pk }}" {% if categorie.pk == produit.category.pk %}selected{% endif %}>{{ categorie.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Le prix du produit<span class="text-danger"> *</span></label>
+                                <input type="number" id="price" name="price" value="{{ produit.price }}" placeholder="Entrez le prix du produit" required>
+                            </div>
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">La quantité de produit<span class="text-danger"> *</span></label>
+                                <input type="number" id="quantite" name="quantite" value="{{ produit.quantite }}" placeholder="Entrez la quantité" required>
+                            </div>
+                        </div>
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Date d'expiration<span class="text-danger"> *</span></label>
+                                <input type="date" id="date_expiration" name="date_expiration" value="{{ produit.date_expiration|date:'Y-m-d' }}" placeholder="Entrez la date d'expiration" required>
+                            </div>
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Image du produit<span class="text-danger"> *</span></label>
+                                <input type="file" id="image" name="image" placeholder="Sélectionnez une image">
+                                {% if produit.image %}
+                                    <img src="{{ produit.image.url }}" alt="Image actuelle" style="max-width: 100px; max-height: 100px;">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-12 flex-column d-flex">
+                                <label class="form-control-label px-3">La description du produit <span class="text-danger"> *</span></label>
+                                <textarea id="description" name="description" placeholder="Entrez une description" required>{{ produit.description }}</textarea>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row justify-content-end">
+                            <div class="form-group col-sm-6">
+                                <input type="submit" class="btn-block btn-primary" value="Enregistrer">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="{% static 'script.js' %}"></script>
+<script src="{% static 'bootstrap.min.js' %}"></script>
+</html>

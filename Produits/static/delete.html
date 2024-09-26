@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block produit %}
+
+
+<div class="products-area-wrapper tableView">
+    <div class="app-content">
+        <div class="container">
+            <div class="row">
+                <div class="col" style="color: aliceblue;">
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  
+
+
+{% endblock produit %}
+
+{% if  user.is_superuser %}
+                        <h3 >Vous êtes sur le point d'effacer un produit
+                             <small style="color: rgb(200, 200, 6);" >Cette action n'est pas reverssible</small></h3>
+                        <form action="{% url 'delete' object.pk  %}" method="post" >
+                            {% csrf_token %}
+                            <a class="btn btn-outline-warning" href="{% url 'home' %}">Annuler</a>
+                            <button class="btn btn-outline-danger">Confirmer</button>
+                        </form>
+                        {% else %}
+                        <h3>Désolé pour supprimer un produit vous devez être un administrateur . <br> <br> <i>Contactez-le</i>
+                             <a class="btn btn-outline-primary" href="mailto:bjaphetpiergy@gmail.com">
+    
+                                <i>par email</i> <a>
+                                     ou <a class="btn btn-outline-success" href="https://wa.me/+242065722803"><i>par WhatsApp</i></a> <br> <br>
+                            <a class="btn btn-secondary" href="{% url 'home'}">Revenir</a>
+                        {% endif %}

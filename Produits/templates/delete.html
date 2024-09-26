@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block produit %}
+
+
+<div class="products-area-wrapper tableView">
+    <div class="app-content">
+        <div class="container">
+            <div class="row">
+
+          
+                <div class="col" style="color: aliceblue;">
+                    {% if user.is_superuser %}
+                    <form action="{% url 'delete' object.pk %}" method="post">
+                        {% csrf_token %}
+                        <h1 style="color: white;">Vous êtes sur le point de supprimer un produit, voulez-vous continuez ?</h1>
+                        <a class="btn btn-outline-warning" href="{% url 'home' %}"> Annuler</a>
+                        <button class="btn btn-outline-danger">Confirmer</button>
+                    </form>
+                    {% else %}
+                    <h3 style="color: white;">Désolé pour supprimé un produit vous devez être un Administrateur. <br> <i>contactez-le </i></h3>
+                    <a class="btn btn-outline-primary"  href="mailto:piergydeveloppement@gmail.com"> <i>Par mail</i></a>
+    
+                    <a class="btn btn-outline-success"  href="https://wa.me/+242065722803"> Par whatsapp</a>
+    
+                    <a class="btn btn-outline-danger"  href="{% url 'home' %}"> revenir</a>
+    
+                    {% endif %}
+                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  
+
+
+{% endblock produit %}

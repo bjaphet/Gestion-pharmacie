@@ -1,0 +1,242 @@
+<a href="#" class="btn btn-info"> <i class="fas fa-edit"></i> </a>
+<a href="#" class="btn btn-danger"> <i class="fas fa-trash"></i> </a> 
+<a href="#" class="btn btn-primary"> <i class="fa-solid fa-info"></i> </a> 
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<a href="{% url 'modification' n.id %}" class="btn btn-info"> 
+    <i class="bi bi-pencil-square"></i>
+  </a> 
+          <!-- Icône de suppression -->
+<a class="btn btn-danger"><i class="bi bi-trash3 delete-button" data-id="{{ n.id }}"></i></a>
+
+
+   
+  <a href="#" class="btn btn-primary"> <i class="bi bi-info-circle"></i> </a> 
+          
+
+
+
+
+path('supprimer/<int:id>/', supprimer_produit, name='supprimer'),
+
+from django.http import JsonResponse
+
+    def supprimer_produit(request, id):
+    if request.method == 'POST':
+        produit = get_object_or_404(Produits, id=id)
+        produit.delete()
+        return JsonResponse({'success': True, 'message': 'Le produit a été supprimé avec succès.'})
+    return JsonResponse({'success': False, 'message': 'Méthode non autorisée.'})
+
+
+
+    
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<script src="{% static 'jquery-3.7.1.min.js' %}"></script>
+<script>
+ $(document).ready(function() {
+     // Cette fonction est exécutée lorsque le document est complètement chargé
+
+     $('.delete-button').on('click', function() {
+         // Ajoute un gestionnaire d'événements au clic sur tous les éléments avec la classe "delete-button"
+
+         var produitId = $(this).data('id');
+         // Récupère l'ID du produit à partir de l'attribut "data-id" du bouton cliqué
+
+         $.ajax({
+             // Envoie une requête AJAX au serveur
+
+             url: '/supprimer/' + produitId + '/',
+             // URL de la requête, incluant l'ID du produit à supprimer
+
+             type: 'POST',
+             // Type de requête HTTP (POST)
+
+             data: {
+                 'csrfmiddlewaretoken': '{{ csrf_token }}'
+                 // Données envoyées avec la requête (ici, le token CSRF pour la sécurité)
+             },
+
+             success: function(response) {
+                 // Fonction exécutée si la requête réussit
+
+                 if (response.success) {
+                     // Si la réponse du serveur indique un succès
+
+                     $('#produit-' + produitId).remove();
+                     // Supprime la ligne du tableau correspondant au produit supprimé
+
+                     $('#successModal').modal('show');
+                     // Affiche la modal de succès
+                 } else {
+                     // Si la suppression échoue
+
+                     alert('Erreur lors de la suppression.');
+                     // Affiche un message d'erreur
+                 }
+             },
+
+             error: function() {
+                 // Fonction exécutée si la requête échoue
+
+                 alert('Erreur lors de la suppression.');
+                 // Affiche un message d'erreur
+             }
+         });
+     });
+ });
+</script>
+
+
+
+    ________________________________________________________________________
+    from django.core.files.storage import FileSystemStorage
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
+
+path('modification/<int:id>/', modifier_produit, name='modification'), 
+    , get_object_or_404
+def modifier_produit(request, id):
+    produit = get_object_or_404(Produits, id=id)
+    categories = Categories.objects.all()
+    errors = {}
+
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        category_id = request.POST.get('category')
+        price = request.POST.get('price')
+        quantite = request.POST.get('quantite')
+        description = request.POST.get('description')
+        date_expiration = request.POST.get('date_expiration')
+        image = request.FILES.get('image')
+
+        # Validation des champs
+        if not name:
+            errors['name'] = "Le nom est requis."
+        if not category_id:
+            errors['category'] = "La catégorie est requise."
+        if not price:
+            errors['price'] = "Le prix est requis."
+        if not quantite:
+            errors['quantite'] = "La quantité est requise."
+        if not description:
+            errors['description'] = "La description est requise."
+        if date_expiration:
+            try:
+                datetime.strptime(date_expiration, '%Y-%m-%d')
+            except ValueError:
+                errors['date_expiration'] = "Le format de la date d'expiration est incorrect. Utilisez le format AAAA-MM-JJ."
+
+        if not errors:
+            category = get_object_or_404(Categories, id=category_id)
+            produit.name = name
+            produit.category = category
+            produit.price = price
+            produit.quantite = quantite
+            produit.description = description
+            produit.date_expiration = date_expiration
+
+            if image:
+                fs = FileSystemStorage()
+                filename = fs.save(image.name, image)
+                produit.image = fs.url(filename)
+            
+            if image:
+                fs = FileSystemStorage()
+                filename = fs.save(image.name, image)
+                produit.image = fs.url(filename)
+
+
+            produit.save()
+            messages.success(request, "Le produit a été modifié avec succès.")
+            return redirect('home')  # Redirige vers la vue de détail du produit
+        else:
+            for key, error in errors.items():
+                messages.error(request, error)
+
+    return render(request, 'modification.html', {'produit': produit, 'categories': categories, 'errors': errors})
+
+
+    
+
+
+
+
+
+
+
+    
+
+# def update_produit(request, id):
+#     produit = get_object_or_404(Produits, id=id)
+#     errors = {}
+
+#     if request.method == 'POST':
+#         name = request.POST.get('name')
+#         category =Categories.objects.get(pk= request.POST['category'])
+#         price = request.POST.get('price')
+#         quantite = request.POST.get('quantite')
+#         description = request.POST.get('description')
+#         date_expiration = request.POST.get('date_expiration')
+#         image = request.FILES.get('image')
+        
+#         if name:
+#             if len(name) > 100:
+#                 errors['name'] = _("Le nom ne peut pas dépasser 100 caractères.")
+#             else:
+#                 produit.name = name
+
+#         if category:
+#             try:
+#                 category = Categories.objects.get(id=category)
+#                 produit.category = category
+#             except Categories.DoesNotExist:
+#                 errors['category'] = _("La catégorie spécifiée n'existe pas.")
+
+#         if price:
+#             try:
+#                 price = int(price)
+#                 if price < 0:
+#                     errors['price'] = _("Le prix ne peut pas être négatif.")
+#                 else:
+#                     produit.price = price
+#             except ValueError:
+#                 errors['price'] = _("Le prix doit être un nombre entier.")
+
+#         if quantite:
+#             try:
+#                 quantite = int(quantite)
+#                 if quantite < 0:
+#                     errors['quantite'] = _("La quantité ne peut pas être négative.")
+#                 else:
+#                     produit.quantite = quantite
+#             except ValueError:
+#                 errors['quantite'] = _("La quantité doit être un nombre entier.")
+
+#         if description:
+#             produit.description = description
+
+#         if date_expiration:
+#             try:
+#                 date_expiration = datetime.strptime(date_expiration, '%Y-%m-%d').date()
+#                 if date_expiration <= datetime.now().date():
+#                     errors['date_expiration'] = _("La date d'expiration doit être dans le futur.")
+#                 else:
+#                     produit.date_expiration = date_expiration
+#             except ValueError:
+#                 errors['date_expiration'] = _("Le format de la date d'expiration est invalide.")
+
+#         if image:
+#             produit.image = image
+
+#         if not errors:
+#             produit.save()
+#             return redirect('home', produit_id=produit.id)
+#     else:
+#         category = Categories.objects.all()
+#         # context = 
+#     return render(request, 'modification.html',{
+#             'produit':produit,
+#             'category':category,
+#             'errors': errors
+#         }
+# )

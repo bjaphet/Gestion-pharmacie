@@ -1,0 +1,18 @@
+Hello !!! 
+
+Voici le guide pour utiliser ces templates éfficacement dans votre projet.
+
+Après avoir téléchargé
+
+1- Copier le dossier bjp et coller le dans le dossier static de votre projet
+
+2- Copier les fichiers suivants:
+		-login.html, 
+		-creation.html, 
+		-nouveauMDP.html,
+		- verificaionMail.html, et coller les dans le dossier templates de votre projet.
+
+Une fois fait, vous êtes près à utiliser ces templates éfficacement dans votre projet.
+
+Merci d'en faire bonne usage svp !
+De la part de Piergy.

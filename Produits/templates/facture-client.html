@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{% static 'styleFacture.css' %}">
+  <title>Tableau Facture</title>
+</head>
+<body>
+  <main>
+    <img src="{% static 'logo.png' %}" alt="" srcset="" width="10%">
+    <h1>piergyDeveloppement</h1>
+    <p>République Du Congo</p>
+    <p>Service Informatique & Divers</p>
+    <p>+242 06 572 28</p>
+    <h2>Facture De Phramacie</h2>
+    <p><time>Date & Heure :{{sale_date}} </time></p>
+    <table class="client">
+      <tr>
+        <th>Facture pour</th>
+        <th>N° de facture</th>
+      </tr>
+      <tr>
+        <td>{{customer}}</td>
+        <td>{{id}}</td>
+      </tr>
+        
+    </table>
+    <hr size="1">
+
+    <table class="description">
+      <tbody>
+        <tr>
+          <th>Produit acheter </th>
+          <th>Qté</th>
+          <th>Prix Unitaire</th>
+          <th>Montant total</th>
+        </tr>
+        <tr>
+
+          <td>{{produit}}</td>
+          <td> {{quantite}}</td>
+          <td> {{prix_unitaire}} FCFA</td>
+          <td>{{total_amount}} FCFA</td>
+        </tr>
+      </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2">Remarque</td>
+            <td>Les produits vendus ne sont ni échangés ni remboursés </td>
+          </tr>
+          <tr>
+            <td colspan="3">Pour tout soucis, voir le vendeur.</td>
+          </tr>
+          <tr>
+            <td colspan="4">{{total_amount}} FCFA</td>
+          </tr>
+        </tfoot>  
+      </table>
+  </main>
+  <button id="print-button" style="background-color: blue; color: aliceblue;">Imprimer</button>
+</body>
+<script>
+  document.getElementById("print-button").addEventListener("click", function() {
+      window.print();
+  });
+  </script>
+</html>

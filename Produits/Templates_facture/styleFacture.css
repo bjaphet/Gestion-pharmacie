@@ -1,0 +1,179 @@
+body {
+  margin:0;
+  border-top: 10px solid orange;
+}
+
+main {
+  margin: 2rem;
+}
+h1 {
+  color: orange;
+  margin: 0;
+  margin-top: 1rem;
+  font-family: "Helvetica", Helvetica, Arial, sans-serif;
+}
+h2 {
+  margin:0;
+  margin-top: 2rem;
+  color: #cc0099;
+  font-size: 3rem;
+  font-family: "Helvetica", Helvetica, Arial, sans-serif;
+}
+p {
+  font-size: 0.8rem;
+  color: #777;
+  margin:0;
+  font-family: "Helvetica", Helvetica, Arial, sans-serif;
+
+}
+
+time {
+  margin:0;
+  margin-left: 0;
+  font-size:1rem;
+  font-weight: 600;
+  color: #3366cc;
+}
+
+.client th {
+  font-size: 18px;
+  color: #3366cc;
+  font-family: "Helvetica", Helvetica, Arial, sans-serif;
+}
+.description th {
+  font-size: 18px;
+  color: orange;
+  font-family: "Helvetica", Helvetica, Arial, sans-serif;
+}
+
+td {
+  border: 0px solid red;
+}
+
+.client td {
+  border: 0px;
+  font-size: 14px;
+}
+
+
+
+table {
+  font-family: "Helvetica", Helvetica, Arial, sans-serif;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+th {
+  font-size: 1.rem;
+}
+
+
+.description tr:nth-child(odd):not(:first-child) {
+  background-color: #eee;
+}
+
+.client th:nth-child(3) {
+
+  text-align: left;
+}
+
+.client th:nth-child(2) {
+
+  text-align: left;
+}
+.client th:nth-child(1) {
+
+  text-align: left;
+}
+.description {
+  font-size: 14px;
+  border-collapse: collapse;
+ 
+}
+.description thead {
+   border-bottom: 5px solid red;
+}
+
+.description td {
+  padding:0.5rem;
+  color: #999;
+}
+
+.description td:first-child {
+  color: black;
+}
+.description tfoot td:first-child {
+  background-color: white;
+}
+.description td:nth-child(1) {
+  text-align: left;
+}
+.description td:nth-child(2) {
+  text-align: right;
+}
+.description td:nth-child(3) {
+  text-align: right;
+}
+.description td:nth-child(4) {
+  text-align: right;
+}
+
+.description th:nth-child(1) {
+  text-align: left;
+}
+.description th:nth-child(2) {
+  text-align: left;
+}
+.description th:nth-child(3) {
+  text-align: right;
+}
+.description th:nth-child(4) {
+  text-align: right;
+}
+
+tfoot {
+  font-size: 10px;
+}
+
+.description tfoot td:first-child(1) {
+  background: red;
+}
+
+tfoot tr:first-child td:first-child{
+  color: #555;
+  font-size:0.8rem;
+}
+tfoot tr:first-child td:last-child{
+  font-size: 1rem;
+  color: black;
+  font-weight: 600;
+}
+tfoot tr:first-child td:nth-child(2){
+  font-size: 1rem;
+  color: blue;
+  font-weight: 600;
+}
+tfoot tr:nth-child(2) td:nth-child(1){
+  font-size: 1rem;
+  text-align: right;
+  color: blue;
+  font-weight: 600;
+}
+tfoot tr:nth-child(2) td:nth-child(2){
+  font-size: 1rem;
+  color: #999;
+  font-weight: 600;
+}
+
+tfoot tr:last-child td:last-child {
+  text-align: right;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin:0;
+  color: #cc0099;
+  font-family: "Helvetica", Helvetica, Arial, sans-serif;
+}
+
+tbody {
+   border-bottom: 1px solid #888;
+}
